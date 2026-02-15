@@ -1,19 +1,16 @@
 package main
 
 import nbn "../../nbnet"
+import nbn_cli "../../nbnet/client"
 import "core:log"
-import "core:strings"
 import "core:time"
-import "vendor:raylib"
 
 main :: proc() {
 	context.logger = log.create_console_logger()
 
-	nbn.GameClient_Init("echo-example", "127.0.0.1", 42042)
+	nbn_cli.init("echo-example", "127.0.0.1", 42042)
 
-	writer := nbn.GameClient_WriteConnectionRequestData()
-
-	if nbn.GameClient_Start() < 0 {
+	if nbn_cli.start() < 0 {
 		log.error("Failed to start client")
 		return
 	}
@@ -25,7 +22,7 @@ main :: proc() {
 		has_event := true
 
 		for has_event {
-			ev := nbn.GameClient_Poll()
+			ev := nbn_cli.poll()
 
 			switch ev {
 			case .No_Event:
@@ -37,12 +34,12 @@ main :: proc() {
 				log.debug("Disconnected")
 				exit = true
 			case .Message_Received:
-				reader := nbn.GameClient_ReadMessage()
+				reader := nbn_cli.read_message()
 				len: u32
-				nbn.ReadUInt32(reader, &len)
+				nbn.read_u32(reader, &len)
 				data := make([]u8, len + 1)
 				defer delete(data)
-				nbn.ReadBytes(reader, raw_data(data), uint(len))
+				nbn.read_bytes(reader, raw_data(data), uint(len))
 				data[len] = 0
 				str := string(data)
 				log.infof("Message received: %s", str)
@@ -56,24 +53,24 @@ main :: proc() {
 
 		if connected {
 			log.debug("Send")
-			writer := nbn.GameClient_CreateReliableMessage(0)
+			writer := nbn_cli.create_reliable_message(0)
 			msg := "Hello, World!"
 			data := raw_data(msg)
 
-			nbn.WriteUInt32(writer, u32(len(msg)))
-			nbn.WriteBytes(writer, data, len(msg))
+			nbn.write_u32(writer, u32(len(msg)))
+			nbn.write_bytes(writer, data, len(msg))
 
-			if nbn.GameClient_EnqueueMessage() < 0 {
+			if nbn_cli.enqueue_message() < 0 {
 				log.error("Failed to enqueue message")
 				break
 			}
 		}
 
-		if nbn.GameClient_Flush() < 0 {
+		if nbn_cli.flush() < 0 {
 			log.error("Failed to flush")
 			break
 		}
 	}
 
-	nbn.GameClient_Stop()
+	nbn_cli.stop()
 }

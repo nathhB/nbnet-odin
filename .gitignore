@@ -4,3 +4,4 @@
 *.bin
 *.dSYM
 *.dylib
+examples/echo/echo
