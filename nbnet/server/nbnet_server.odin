@@ -34,6 +34,8 @@ foreign nbnet {
 	start :: proc() -> int ---
 	@(link_name = "NBN_GameServer_Stop")
 	stop :: proc() ---
+	@(link_name = "NBN_GameServer_CreateChannel")
+	create_channel :: proc(mode: nbn.Channel_Mode, buffer_size: uint, max_message_len: uint) ---
 	@(link_name = "NBN_GameServer_Poll")
 	poll :: proc() -> Server_Event ---
 	@(link_name = "NBN_GameServer_Flush")
@@ -43,15 +45,11 @@ foreign nbnet {
 	@(link_name = "NBN_GameServer_CloseClientWithCode")
 	close_client_with_code :: proc(conn: ^nbn.Connection_Handle, code: int) -> int ---
 	@(link_name = "NBN_GameServer_CreateMessage")
-	create_message :: proc(type: u8, channel: u8) -> ^nbn.Writer ---
+	create_message :: proc(type: u8, channel: u8, receiver: nbn.Connection_Handle) -> ^nbn.Writer ---
 	@(link_name = "NBN_GameServer_CreateReliableMessage")
-	create_reliable_message :: proc(type: u8) -> ^nbn.Writer ---
+	create_reliable_message :: proc(type: u8, receiver: nbn.Connection_Handle) -> ^nbn.Writer ---
 	@(link_name = "NBN_GameServer_CreateUnreliableMessage")
-	create_unreliable_message :: proc(type: u8) -> ^nbn.Writer ---
-	@(link_name = "NBN_GameServer_EnqueueMessageFor")
-	enqueue_message_for :: proc(receiver: ^nbn.Connection_Handle) ---
-	@(link_name = "NBN_GameServer_BroadcastMessage")
-	broadcast_message :: proc() ---
+	create_unreliable_message :: proc(type: u8, receiver: nbn.Connection_Handle) -> ^nbn.Writer ---
 	@(link_name = "NBN_GameServer_ReadMessage")
 	read_message :: proc() -> ^nbn.Reader ---
 	@(link_name = "NBN_GameServer_WriteConnectionData")

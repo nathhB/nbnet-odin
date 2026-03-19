@@ -29,6 +29,8 @@ foreign nbnet {
 	start :: proc() -> int ---
 	@(link_name = "NBN_GameClient_Stop")
 	stop :: proc() ---
+	@(link_name = "NBN_GameClient_CreateChannel")
+	create_channel :: proc(mode: nbn.Channel_Mode, buffer_size: uint, max_message_len: uint) ---
 	@(link_name = "NBN_GameClient_WriteConnectionRequestData")
 	write_connection_request_data :: proc() -> ^nbn.Writer ---
 	@(link_name = "NBN_GameClient_ReadServerData")
@@ -43,8 +45,6 @@ foreign nbnet {
 	create_reliable_message :: proc(type: u8) -> ^nbn.Writer ---
 	@(link_name = "NBN_GameClient_CreateUnreliableMessage")
 	create_unreliable_message :: proc(type: u8) -> ^nbn.Writer ---
-	@(link_name = "NBN_GameClient_EnqueueMessage")
-	enqueue_message :: proc() -> int ---
 	@(link_name = "NBN_GameClient_ReadMessage")
 	read_message :: proc() -> ^nbn.Reader ---
 	@(link_name = "NBN_GameClient_GetMessageInfo")

@@ -44,6 +44,11 @@ Message_Info :: struct {
 	sender:     ^Connection_Handle,
 }
 
+Channel_Mode :: enum {
+	Unreliable,
+	Reliable,
+}
+
 foreign nbnet {
 	@(link_name = "NBN_Writer_Init")
 	writer_init :: proc(writer: ^Writer, buffer: [^]u8, length: uint) ---

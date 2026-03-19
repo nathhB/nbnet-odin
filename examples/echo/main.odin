@@ -52,18 +52,18 @@ main :: proc() {
 		time.sleep(time.Second / 2)
 
 		if connected {
-			log.debug("Send")
 			writer := nbn_cli.create_reliable_message(0)
+
+			if writer == nil {
+				log.error("Failed to enqueue message")
+				break
+			}
+
 			msg := "Hello, World!"
 			data := raw_data(msg)
 
 			nbn.write_u32(writer, u32(len(msg)))
 			nbn.write_bytes(writer, data, len(msg))
-
-			if nbn_cli.enqueue_message() < 0 {
-				log.error("Failed to enqueue message")
-				break
-			}
 		}
 
 		if nbn_cli.flush() < 0 {
