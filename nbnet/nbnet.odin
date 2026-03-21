@@ -12,11 +12,11 @@ when ODIN_OS == .Windows {
 	#panic("Unknown platform")
 }
 
-LogLevel :: enum {
-	ERROR,
-	INFO,
-	WARNING,
-	DEBUG,
+Log_Level :: enum {
+	Error,
+	Info,
+	Warning,
+	Debug,
 }
 
 Reader :: struct {
@@ -50,6 +50,8 @@ Channel_Mode :: enum {
 }
 
 foreign nbnet {
+	@(link_name = "NBN_SetLogLevel")
+	set_log_level :: proc(log_level: Log_Level) ---
 	@(link_name = "NBN_Writer_Init")
 	writer_init :: proc(writer: ^Writer, buffer: [^]u8, length: uint) ---
 	@(link_name = "NBN_Writer_WriteInt8")

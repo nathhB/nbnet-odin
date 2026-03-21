@@ -14,7 +14,7 @@ when ODIN_OS == .Windows {
 	#panic("Unknown platform")
 }
 
-Server_Event :: enum {
+Event :: enum {
 	Error              = -1,
 	No_Event           = 0,
 	Connection_Request = 1,
@@ -37,7 +37,7 @@ foreign nbnet {
 	@(link_name = "NBN_GameServer_CreateChannel")
 	create_channel :: proc(mode: nbn.Channel_Mode, buffer_size: uint, max_message_len: uint) ---
 	@(link_name = "NBN_GameServer_Poll")
-	poll :: proc() -> Server_Event ---
+	poll :: proc() -> Event ---
 	@(link_name = "NBN_GameServer_Flush")
 	flush :: proc() -> int ---
 	@(link_name = "NBN_GameServer_CloseClient")
@@ -65,7 +65,7 @@ foreign nbnet {
 	@(link_name = "NBN_GameServer_ReadConnectionRequestData")
 	read_connection_request :: proc() -> ^nbn.Reader ---
 	@(link_name = "NBN_GameServer_GetDisconnectionInfo")
-	get_disconnection_info :: proc() -> ^Disconnection_Info ---
+	get_disconnection_info :: proc() -> Disconnection_Info ---
 	@(link_name = "NBN_GameServer_GetMessageInfo")
 	get_message_info :: proc() -> nbn.Message_Info ---
 }

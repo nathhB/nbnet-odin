@@ -14,7 +14,7 @@ when ODIN_OS == .Windows {
 
 import nbn ".."
 
-Client_Event :: enum {
+Event :: enum {
 	Error            = -1,
 	No_Event         = 0,
 	Connected        = 1,
@@ -36,7 +36,7 @@ foreign nbnet {
 	@(link_name = "NBN_GameClient_ReadServerData")
 	read_server_data :: proc() -> ^nbn.Reader ---
 	@(link_name = "NBN_GameClient_Poll")
-	poll :: proc() -> Client_Event ---
+	poll :: proc() -> Event ---
 	@(link_name = "NBN_GameClient_Flush")
 	flush :: proc() -> int ---
 	@(link_name = "NBN_GameClient_CreateMessage")
