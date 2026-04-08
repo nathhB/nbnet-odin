@@ -90,7 +90,7 @@ foreign nbnet {
 	@(link_name = "NBN_Reader_ReadInt64")
 	read_i64 :: proc(reader: ^Reader, value: ^i64) -> int ---
 	@(link_name = "NBN_Reader_ReadUInt8")
-	read_u8 :: proc(reader: ^Reader, value: ^u8) -> int ---
+	read_u8 :: proc(reader: ^Reader, value: ^u8) -> i32 ---
 	@(link_name = "NBN_Reader_ReadUInt16")
 	read_u16 :: proc(reader: ^Reader, value: ^u16) -> int ---
 	@(link_name = "NBN_Reader_ReadUInt32")

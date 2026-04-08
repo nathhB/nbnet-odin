@@ -27,45 +27,47 @@ Disconnection_Info :: struct {
 	user_data: rawptr,
 }
 
+Server :: distinct rawptr
+
 foreign nbnet {
-	@(link_name = "NBN_GameServer_Init")
-	init :: proc(protocol_name: cstring, port: u16) ---
+	@(link_name = "NBN_GameServer_Create")
+	create :: proc(protocol_name: cstring, port: u16) -> Server ---
 	@(link_name = "NBN_GameServer_Start")
-	start :: proc() -> int ---
+	start :: proc(server: Server) -> int ---
 	@(link_name = "NBN_GameServer_Stop")
-	stop :: proc() ---
+	stop :: proc(server: Server) ---
 	@(link_name = "NBN_GameServer_CreateChannel")
-	create_channel :: proc(mode: nbn.Channel_Mode, buffer_size: uint, max_message_len: uint) ---
+	create_channel :: proc(server: Server, mode: nbn.Channel_Mode, buffer_size: uint, max_message_len: uint) ---
 	@(link_name = "NBN_GameServer_Poll")
-	poll :: proc() -> Event ---
+	poll :: proc(server: Server) -> Event ---
 	@(link_name = "NBN_GameServer_Flush")
-	flush :: proc() -> int ---
+	flush :: proc(server: Server) -> int ---
 	@(link_name = "NBN_GameServer_CloseClient")
-	close_client :: proc(conn: ^nbn.Connection_Handle) -> int ---
+	close_client :: proc(server: Server, conn: ^nbn.Connection_Handle) -> int ---
 	@(link_name = "NBN_GameServer_CloseClientWithCode")
-	close_client_with_code :: proc(conn: ^nbn.Connection_Handle, code: int) -> int ---
+	close_client_with_code :: proc(server: Server, conn: ^nbn.Connection_Handle, code: int) -> int ---
 	@(link_name = "NBN_GameServer_CreateMessage")
-	create_message :: proc(type: u8, channel: u8, receiver: nbn.Connection_Handle) -> ^nbn.Writer ---
+	create_message :: proc(server: Server, type: u8, channel: u8, receiver: ^nbn.Connection_Handle) -> ^nbn.Writer ---
 	@(link_name = "NBN_GameServer_CreateReliableMessage")
-	create_reliable_message :: proc(type: u8, receiver: nbn.Connection_Handle) -> ^nbn.Writer ---
+	create_reliable_message :: proc(server: Server, type: u8, receiver: ^nbn.Connection_Handle) -> ^nbn.Writer ---
 	@(link_name = "NBN_GameServer_CreateUnreliableMessage")
-	create_unreliable_message :: proc(type: u8, receiver: nbn.Connection_Handle) -> ^nbn.Writer ---
+	create_unreliable_message :: proc(server: Server, type: u8, receiver: ^nbn.Connection_Handle) -> ^nbn.Writer ---
 	@(link_name = "NBN_GameServer_ReadMessage")
-	read_message :: proc() -> ^nbn.Reader ---
+	read_message :: proc(server: Server) -> ^nbn.Reader ---
 	@(link_name = "NBN_GameServer_WriteConnectionData")
-	write_connection_data :: proc() -> ^nbn.Writer ---
+	write_connection_data :: proc(server: Server) -> ^nbn.Writer ---
 	@(link_name = "NBN_GameServer_AcceptIncomingConnection")
-	accept_connection :: proc() -> int ---
+	accept_connection :: proc(server: Server) -> int ---
 	@(link_name = "NBN_GameServer_RejectIncomingConnection")
-	reject_connection :: proc() -> int ---
+	reject_connection :: proc(server: Server) -> int ---
 	@(link_name = "NBN_GameServer_RejectIncomingConnectionWithCode")
-	reject_connection_with_code :: proc(code: int) -> int ---
+	reject_connection_with_code :: proc(server: Server, code: int) -> int ---
 	@(link_name = "NBN_GameServer_GetIncomingConnection")
-	get_incoming_connection :: proc() -> ^nbn.Connection_Handle ---
+	get_incoming_connection :: proc(server: Server) -> ^nbn.Connection_Handle ---
 	@(link_name = "NBN_GameServer_ReadConnectionRequestData")
-	read_connection_request :: proc() -> ^nbn.Reader ---
+	read_connection_request :: proc(server: Server) -> ^nbn.Reader ---
 	@(link_name = "NBN_GameServer_GetDisconnectionInfo")
-	get_disconnection_info :: proc() -> Disconnection_Info ---
+	get_disconnection_info :: proc(server: Server) -> Disconnection_Info ---
 	@(link_name = "NBN_GameServer_GetMessageInfo")
-	get_message_info :: proc() -> nbn.Message_Info ---
+	get_message_info :: proc(server: Server) -> nbn.Message_Info ---
 }

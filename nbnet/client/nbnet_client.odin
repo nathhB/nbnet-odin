@@ -22,31 +22,33 @@ Event :: enum {
 	Message_Received = 3,
 }
 
+Client :: distinct rawptr
+
 foreign nbnet {
-	@(link_name = "NBN_GameClient_Init")
-	init :: proc(protocol_name: cstring, host: cstring, port: u16) ---
-	@(link_name = "NBN_GameClient_Start")
-	start :: proc() -> int ---
-	@(link_name = "NBN_GameClient_Stop")
-	stop :: proc() ---
-	@(link_name = "NBN_GameClient_CreateChannel")
-	create_channel :: proc(mode: nbn.Channel_Mode, buffer_size: uint, max_message_len: uint) ---
-	@(link_name = "NBN_GameClient_WriteConnectionRequestData")
-	write_connection_request_data :: proc() -> ^nbn.Writer ---
-	@(link_name = "NBN_GameClient_ReadServerData")
-	read_server_data :: proc() -> ^nbn.Reader ---
-	@(link_name = "NBN_GameClient_Poll")
-	poll :: proc() -> Event ---
-	@(link_name = "NBN_GameClient_Flush")
-	flush :: proc() -> int ---
-	@(link_name = "NBN_GameClient_CreateMessage")
-	create_message :: proc(type: u8, channel_id: u8) -> ^nbn.Writer ---
-	@(link_name = "NBN_GameClient_CreateReliableMessage")
-	create_reliable_message :: proc(type: u8) -> ^nbn.Writer ---
-	@(link_name = "NBN_GameClient_CreateUnreliableMessage")
-	create_unreliable_message :: proc(type: u8) -> ^nbn.Writer ---
-	@(link_name = "NBN_GameClient_ReadMessage")
-	read_message :: proc() -> ^nbn.Reader ---
-	@(link_name = "NBN_GameClient_GetMessageInfo")
-	get_message_info :: proc() -> nbn.Message_Info ---
+	@(link_name = "NBN_Client_Create")
+	create :: proc(protocol_name: cstring, host: cstring, port: u16) -> Client ---
+	@(link_name = "NBN_Client_Start")
+	start :: proc(client: Client) -> int ---
+	@(link_name = "NBN_Client_Stop")
+	stop :: proc(client: Client) ---
+	@(link_name = "NBN_Client_CreateChannel")
+	create_channel :: proc(client: Client, mode: nbn.Channel_Mode, buffer_size: uint, max_message_len: uint) ---
+	@(link_name = "NBN_Client_WriteConnectionRequestData")
+	write_connection_request_data :: proc(client: Client) -> ^nbn.Writer ---
+	@(link_name = "NBN_Client_ReadServerData")
+	read_server_data :: proc(client: Client) -> ^nbn.Reader ---
+	@(link_name = "NBN_Client_Poll")
+	poll :: proc(client: Client) -> Event ---
+	@(link_name = "NBN_Client_Flush")
+	flush :: proc(client: Client) -> int ---
+	@(link_name = "NBN_Client_CreateMessage")
+	create_message :: proc(client: Client, type: u8, channel_id: u8) -> ^nbn.Writer ---
+	@(link_name = "NBN_Client_CreateReliableMessage")
+	create_reliable_message :: proc(client: Client, type: u8) -> ^nbn.Writer ---
+	@(link_name = "NBN_Client_CreateUnreliableMessage")
+	create_unreliable_message :: proc(client: Client, type: u8) -> ^nbn.Writer ---
+	@(link_name = "NBN_Client_ReadMessage")
+	read_message :: proc(client: Client) -> ^nbn.Reader ---
+	@(link_name = "NBN_Client_GetMessageInfo")
+	get_message_info :: proc(client: Client) -> nbn.Message_Info ---
 }
