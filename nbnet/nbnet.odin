@@ -5,7 +5,7 @@ when ODIN_OS == .Windows {
 } else when ODIN_OS == .Linux {
 	// TODO:
 } else when ODIN_OS == .Darwin {
-	foreign import nbnet "../libnbnet_udp.dylib"
+	foreign import nbnet "./libnbnet_udp.dylib"
 } else when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
 	// TODO:
 } else {

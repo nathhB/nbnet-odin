@@ -51,4 +51,6 @@ foreign nbnet {
 	read_message :: proc(client: Client) -> ^nbn.Reader ---
 	@(link_name = "NBN_Client_GetMessageInfo")
 	get_message_info :: proc(client: Client) -> nbn.Message_Info ---
+	@(link_name = "NBN_Client_IsConnected")
+	is_connected :: proc(client: Client) -> bool ---
 }
