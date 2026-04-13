@@ -70,4 +70,18 @@ foreign nbnet {
 	get_disconnection_info :: proc(server: Server) -> Disconnection_Info ---
 	@(link_name = "NBN_Server_GetMessageInfo")
 	get_message_info :: proc(server: Server) -> nbn.Message_Info ---
+	@(link_name = "NBN_Server_GetConnection")
+	__get_client_connection :: proc(server: Server, conn_id: nbn.Connection_Id) -> ^nbn.Connection_Handle ---
+}
+
+get_client_connection :: proc(
+	server: Server,
+	conn_id: nbn.Connection_Id,
+) -> (
+	handle: ^nbn.Connection_Handle,
+	ok: bool,
+) {
+	handle = __get_client_connection(server, conn_id)
+	ok = handle != nil
+	return
 }

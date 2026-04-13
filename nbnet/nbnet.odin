@@ -31,8 +31,10 @@ Writer :: struct {
 	position: uint,
 }
 
+Connection_Id :: u64
+
 Connection_Handle :: struct {
-	id:        u64,
+	id:        Connection_Id,
 	user_data: rawptr,
 }
 
