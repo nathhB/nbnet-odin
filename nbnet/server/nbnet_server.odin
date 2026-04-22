@@ -37,7 +37,7 @@ foreign nbnet {
 	@(link_name = "NBN_Server_Stop")
 	stop :: proc(server: Server) ---
 	@(link_name = "NBN_Server_CreateChannel")
-	create_channel :: proc(server: Server, mode: nbn.Channel_Mode, buffer_size: uint, max_message_len: uint) ---
+	create_channel :: proc(server: Server, mode: nbn.Channel_Mode, buffer_size: uint, max_message_len: uint) -> u8 ---
 	@(link_name = "NBN_Server_Poll")
 	poll :: proc(server: Server) -> Event ---
 	@(link_name = "NBN_Server_Flush")

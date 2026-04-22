@@ -32,7 +32,7 @@ foreign nbnet {
 	@(link_name = "NBN_Client_Stop")
 	stop :: proc(client: Client) ---
 	@(link_name = "NBN_Client_CreateChannel")
-	create_channel :: proc(client: Client, mode: nbn.Channel_Mode, buffer_size: uint, max_message_len: uint) ---
+	create_channel :: proc(client: Client, mode: nbn.Channel_Mode, buffer_size: uint, max_message_len: uint) -> u8 ---
 	@(link_name = "NBN_Client_WriteConnectionRequestData")
 	write_connection_request_data :: proc(client: Client) -> ^nbn.Writer ---
 	@(link_name = "NBN_Client_ReadServerData")
