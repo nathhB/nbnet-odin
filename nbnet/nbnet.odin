@@ -21,14 +21,14 @@ Log_Level :: enum {
 
 Reader :: struct {
 	buffer:   [^]u8,
-	length:   uint,
-	position: uint,
+	length:   u16,
+	position: u16,
 }
 
 Writer :: struct {
 	buffer:   [^]u8,
-	length:   uint,
-	position: uint,
+	length:   u16,
+	position: u16,
 }
 
 Connection_Id :: u64
